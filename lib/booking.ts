@@ -21,23 +21,25 @@ const CITY_ALIASES: Record<string, string> = {
   'xelaju':               'Quetzaltenango',
 }
 
-function resolveCity(input: string): string {
-  const normalized = input
-    .toLowerCase()
-    .trim()
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '') // quitar tildes para comparar
-    .replace(/[̀-ͯ]/g, '')
+function stripAccents(str: string): string {
+  return str.normalize('NFD').replace(/[̀-ͯ]/g, '')
+}
 
-  // Buscar en aliases (también normalizado)
+function resolveCity(input: string): string {
+  const normalized = stripAccents(input.toLowerCase().trim())
+
+  // Paso 1: match exacto (más específico primero)
   for (const [alias, canonical] of Object.entries(CITY_ALIASES)) {
-    const aliasNorm = alias.normalize('NFD').replace(/[̀-ͯ]/g, '')
-    if (normalized === aliasNorm || normalized.includes(aliasNorm)) {
-      return canonical
-    }
+    if (normalized === stripAccents(alias)) return canonical
   }
 
-  // Si no hay alias, capitalizar y devolver tal cual
+  // Paso 2: includes, ordenando aliases de mayor a menor longitud
+  //         para que "antigua guatemala" gane sobre "guatemala"
+  const sorted = Object.entries(CITY_ALIASES).sort((a, b) => b[0].length - a[0].length)
+  for (const [alias, canonical] of sorted) {
+    if (normalized.includes(stripAccents(alias))) return canonical
+  }
+
   return input.trim()
 }
 
@@ -77,7 +79,11 @@ export async function findHotels(prefs: UserPreferences): Promise<Hotel[]> {
     })
   }
 
-  return results
+  // Reconstruir bookingUrl con las fechas reales del usuario
+  return results.map(h => ({
+    ...h,
+    bookingUrl: `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(h.name)}&checkin=${prefs.checkIn}&checkout=${prefs.checkOut}&group_adults=${prefs.guests}&no_rooms=1`,
+  }))
 }
 
 // ─── Código RapidAPI (comentado, conservado para referencia) ─────────────────
