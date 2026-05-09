@@ -4,9 +4,9 @@ import type { UserPreferences } from '@/types'
 
 export const WELCOME_MESSAGE = `¡Hola! Soy tu asistente de viajes con IA. 🏨
 
-Estoy aquí para ayudarte a encontrar el hotel perfecto para tu próximo viaje. Te haré algunas preguntas para conocer tus preferencias y así recomendarte las mejores opciones.
+Estoy aquí para ayudarte a encontrar el hotel perfecto en Guatemala. Te haré algunas preguntas para conocer tus preferencias y recomendarte la mejor opción.
 
-¿A qué ciudad te gustaría viajar?`
+¿A qué ciudad de Guatemala te gustaría viajar?`
 
 // ─── Prompt del sistema para Gemini ───────────────────────────────────────────
 
