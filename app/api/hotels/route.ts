@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { findHotels } from '@/lib/booking'
-import { generateRecommendation } from '@/lib/gemini'
+import { generateRecommendation } from '@/lib/groq'
 import type { UserPreferences } from '@/types'
 
 export async function POST(request: Request) {

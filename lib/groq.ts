@@ -61,6 +61,7 @@ export async function generateRecommendation(
   const hotelsSummary = hotels.map(h => ({
     hotelId: h.hotelId,
     name: h.name,
+    city: h.city,
     stars: h.stars,
     rating: h.rating,
     reviewCount: h.reviewCount,

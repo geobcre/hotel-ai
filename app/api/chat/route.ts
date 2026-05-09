@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { processUserMessage } from '@/lib/gemini'
+import { processUserMessage } from '@/lib/groq'
 import type { UserPreferences } from '@/types'
 
 export async function POST(request: Request) {
