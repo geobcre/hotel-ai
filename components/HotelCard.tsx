@@ -33,7 +33,7 @@ export default function HotelCard({ result }: HotelCardProps) {
           </div>
           <div className="flex-shrink-0 text-right">
             <div className="text-lg font-bold text-[var(--foreground)]">
-              {hotel.currency} {hotel.pricePerNight.toLocaleString()}
+              {hotel.currency || 'USD'} {hotel.pricePerNight.toLocaleString()}
             </div>
             <div className="text-xs text-[var(--text-muted)]">por noche</div>
           </div>
