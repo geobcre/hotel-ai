@@ -1,5 +1,5 @@
 import Groq from 'groq-sdk'
-import type { AgentResponse, Hotel, RecommendationResult, UserPreferences } from '@/types'
+import type { AgentResponse, Hotel, UserPreferences } from '@/types'
 import { SYSTEM_PROMPT, buildPromptContext } from './conversationFlow'
 
 // ─── Inicialización del cliente ───────────────────────────────────────────────
@@ -78,7 +78,7 @@ export async function generateRecommendation(
 - Huéspedes: ${preferences.guests}
 - Presupuesto: ${preferences.budgetMin}-${preferences.budgetMax} ${preferences.currency} por noche
 - Tipo de viaje: ${preferences.tripType}
-- Amenidades deseadas: ${preferences.amenities.join(', ')}
+- Amenidades deseadas: ${(preferences.amenities ?? []).join(', ') || 'sin preferencia'}
 ${preferences.specialRequests ? `- Solicitudes especiales: ${preferences.specialRequests}` : ''}
 
 ## Hoteles disponibles:
